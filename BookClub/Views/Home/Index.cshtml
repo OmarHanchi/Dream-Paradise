@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model User
+<div class="container">
+    <div class="text-center">
+        <h1 class="font-weight-bold">Welcome to the Book Club</h1>
+    </div>
+    <div class="row justify-content-around">
+        <div class="col-md-6 mt-3">
+            <partial name="_RegistrationForm" />
+        </div>
+
+        <!-- Login Form -->
+        <div class="col-md-6 mt-3">
+            <partial name="_login" />
+        </div>
+    </div>
+</div>
+
+
+

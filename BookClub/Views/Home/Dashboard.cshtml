@@ -1,0 +1,63 @@
+@model List<Book>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-4">Welcome to the Book Club, @ViewBag.loggedInUser.FirstName</h2>
+                <!-- Add A New Book Button -->
+                <a href="/book/add" class="btn btn-primary mb-3">Add A New Book <i class="fa-solid fa-book fa-fade" style="color: #ffffff;"></i></a>
+                <h2 class="mb-3">All Books</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var book in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <h5 >
+                                    <a style="color: black" href="@(book.CreatorId == ViewBag.LoggedInUser?.UserId ? "/books/view/" + book.BookId : "/books/details/"+ book.BookId)">@book.Title</a>
+                                    </h5>
+                                </td>
+                                <td>
+                                    <p class="text-muted">Add by @(book.Creator != null ? $"{book.Creator.FirstName} {book.Creator.LastName}" : "Unknown Author")</p>
+
+                                </td>
+                                <td>
+                                    <div class="book-action">
+                                        @if (ViewBag.UserFavorites.Contains(book))
+                                        {
+                                            <form method="post" action="/books/removefromfavorites/@book.BookId" style="display:inline;">
+                                                <button type="submit" class="btn btn-sm btn-danger">Remove from Favorites <i class="fa-sharp fa-solid fa-heart-circle-xmark" style="color: #780707;"></i></button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form method="post" action="/books/addtofavorites/@book.BookId" style="display:inline;">
+                                                <button type="submit" class="btn btn-sm btn-success">Add to Favorites <i class="fa-sharp fa-solid fa-heart-circle-plus fa-beat-fade"></i> </button>
+                                            </form>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "All Books";
+}
+
+<h1>All Books</h1>
+
+<ul>
+    @foreach (var book in Model)
+    {
+        <li>@book.Title - @book.Description - Added by @book.Creator.FirstName @book.Creator.LastName</li>
+    }
+</ul>
+
+<a href="/Dashboard">Go back to Dashboard</a>
